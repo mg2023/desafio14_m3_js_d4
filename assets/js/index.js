@@ -36,6 +36,7 @@ const propiedadesJSON = [
     description: "Desde las alturas todo se ve mejor",
     src:
       "https://www.adondevivir.com/noticias/wp-content/uploads/2016/08/depto-1024x546.jpg",
+
     rooms: 3,
     m: 200
   },
@@ -43,29 +44,87 @@ const propiedadesJSON = [
     name: "Mansión",
     description: "Vive una vida lujosa en la mansión de tus sueños ",
     src:
-      "https://resizer.glanacion.com/resizer/fhK-tSVag_8UGJjPMgWrspslPoU=/768x0/filters:quality(80)/cloudfront-us-east-1.images.arcpublishing.com/lanacionar/CUXVMXQE4JD5XIXX4X3PDZAVMY.jpg",
+    "https://cdn.bioguia.com/embed/3d0fb0142790e6b90664042cbafcb1581427139/furgoneta.jpg",
+    // src:
+    //   "https://resizer.glanacion.com/resizer/fhK-tSVag_8UGJjPMgWrspslPoU=/768x0/filters:quality(80)/cloudfront-us-east-1.images.arcpublishing.com/lanacionar/CUXVMXQE4JD5XIXX4X3PDZAVMY.jpg",
     rooms: 5,
     m: 500
   }
 ];
-
 
 let btnBuscar = document.getElementById("btn-buscar")
 let cantidadDeCuartos = document.getElementById("cant-cuartos")
 let cantMetrosDesde = document.getElementById("metros-desde")
 let cantMetrosHasta = document.getElementById("metros-hasta")
 
+const propiedadesSection = document.querySelector(".propiedades")
+
+
+// propiedadesSection.innerHTML = `
+// <div class="propiedad">
+//   <div class="img"
+//     style="background-image: url(${propiedadesJSON[0]["src"]})">
+//   </div>
+//   <section>
+//     <h5>${propiedadesJSON[0]["name"]}</h5>
+//     <div class="d-flex justify-content-between">
+//       <p>Cuartos: ${propiedadesJSON[0]["rooms"]}</p>
+//       <p>Metros: ${propiedadesJSON[0]["m"]}</p>
+//     </div>
+//     <p class="my-3">${propiedadesJSON[0]["description"]}</p>
+//     <button class="btn btn-info ">Ver más</button>
+//   </section>
+// </div>`
+
+let template = ''
+for (let ventas of propiedadesJSON) {
+  template = `
+  <div class="propiedad">
+    <div class="img"
+      style="background-image: url(${ventas["src"]})">
+    </div>
+    <section>
+      <h5>${ventas["name"]}</h5>
+      <div class="d-flex justify-content-between">
+        <p>Cuartos: ${ventas["rooms"]}</p>
+        <p>Metros: ${ventas["m"]}</p>
+      </div>
+      <p class="my-3">${ventas["description"]}</p>
+      <button class="btn btn-info ">Ver más</button>
+    </section>
+  </div>`;
+  propiedadesSection.innerHTML += template
+}
+
 btnBuscar.addEventListener("click", () => {
-
-
-
   if (cantidadDeCuartos.value && cantMetrosDesde.value && cantMetrosHasta.value) {
     alert(`cantidad de cuartos ${cantidadDeCuartos.value}`)
     alert(`metros desde ${cantMetrosDesde.value}`)
     alert(`metros hasta ${cantMetrosHasta.value}`)
+
+    template = ''
+    for (let ventas of propiedadesJSON) {
+      template = `
+      <div class="propiedad">
+        <div class="img"
+          style="background-image: url(${ventas["src"]})">
+        </div>
+        <section>
+          <h5>${ventas["name"]}</h5>
+          <div class="d-flex justify-content-between">
+            <p>Cuartos: ${ventas["rooms"]}</p>
+            <p>Metros: ${ventas["m"]}</p>
+          </div>
+          <p class="my-3">${ventas["description"]}</p>
+          <button class="btn btn-info ">Ver más</button>
+        </section>
+      </div>`;
+      propiedadesSection.innerHTML += template
+    }
 
   }
   else {
     alert("Faltan campos por rellenar")
   }
 })
+
