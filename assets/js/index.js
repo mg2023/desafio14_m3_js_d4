@@ -76,7 +76,6 @@ const propiedadesSection = document.querySelector('.propiedades')
 // </div>`
 
 let template = ''
-/* eslint-disable-next-line */
 for (const ventas of propiedadesJSON) {
   template = `
   <div class="propiedad">
@@ -98,14 +97,11 @@ for (const ventas of propiedadesJSON) {
 
 btnBuscar.addEventListener('click', () => {
   if (cantidadDeCuartos.value && cantMetrosDesde.value && cantMetrosHasta.value) {
-    alert(`cantidad de cuartos ${cantidadDeCuartos.value}`)
-
-    alert(`metros desde ${cantMetrosDesde.value}`)
-
-    alert(`metros hasta ${cantMetrosHasta.value}`)
+    // alert(`cantidad de cuartos ${cantidadDeCuartos.value}`)
+    // alert(`metros desde ${cantMetrosDesde.value}`)
+    // alert(`metros hasta ${cantMetrosHasta.value}`)
 
     template = ''
-    /* eslint-disable-next-line */
     for (const ventas of propiedadesJSON) {
       template = `
       <div class="propiedad">
@@ -122,10 +118,17 @@ btnBuscar.addEventListener('click', () => {
           <button class="btn btn-info ">Ver más</button>
         </section>
       </div>`
-      propiedadesSection.innerHTML += template
+      propiedadesSection.innerHTML += templatenull
     }
   } else {
-    // eslint-disable-next-line no-alert
-    alert('Faltan campos por rellenar')
+    if (cantidadDeCuartos.value.length === 0) {
+      alert('cantidad de cuartos VACIO')
+    } else if (cantMetrosDesde.value.length === 0) {
+      alert('cantidad de metros desde VACIO')
+    } else if (cantMetrosHasta.value.length === 0) {
+      alert('cantidad de metros hasta VACIO')
+    } else {
+      alert('Error no considerado')
+    }
   }
 })
