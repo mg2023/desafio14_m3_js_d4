@@ -118,7 +118,7 @@ btnBuscar.addEventListener('click', () => {
           <button class="btn btn-info ">Ver más</button>
         </section>
       </div>`
-      propiedadesSection.innerHTML += templatenull
+      propiedadesSection.innerHTML += template
     }
   } else {
     if (cantidadDeCuartos.value.length === 0) {
