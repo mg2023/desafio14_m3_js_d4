@@ -1,3 +1,4 @@
+// Declaracion de variables
 const propiedadesJSON = [
   {
     name: 'Casa de campo',
@@ -51,7 +52,6 @@ const propiedadesJSON = [
     m: 500
   }
 ]
-
 const btnBuscar = document.getElementById('btn-buscar')
 const cantidadDeCuartos = document.getElementById('cant-cuartos')
 const cantMetrosDesde = document.getElementById('metros-desde')
@@ -61,6 +61,47 @@ const propiedadesSection = document.querySelector('.propiedades')
 let template = ''
 let html = ''
 
+function filtroDePropiedades (cantidadDeCuartos, cantMetrosDesde, cantMetrosHasta) {
+  let html = ''
+  template = ''
+  // let temp = []
+  let indexes = []
+  // console.log('Entra al filtro de propiedades')
+  // console.log(typeof (Number(cantidadDeCuartos.value)))
+  // console.log(typeof (cantMetrosDesde.value))
+  // console.log(typeof (cantMetrosHasta.value))
+
+  for (const ventas of propiedadesJSON) {
+    if (ventas.rooms === Number(cantidadDeCuartos.value)) {
+      if (ventas.m >= Number(cantMetrosDesde.value)) {
+        if (ventas.m <= Number(cantMetrosHasta.value)) {
+          console.log(ventas.rooms)
+          console.log(propiedadesJSON.indexOf(ventas))
+          console.log(ventas)
+          template = `
+          <div class="propiedad">
+            <div class="img"
+              style="background-image: url(${ventas.src})">
+            </div>
+            <section>
+              <h5>${ventas.name}</h5>
+              <div class="d-flex justify-content-between">
+                <p>Cuartos: ${ventas.rooms}</p>
+                <p>Metros: ${ventas.m}</p>
+              </div>
+              <p class="my-3">${ventas.description}</p>
+              <button class="btn btn-info ">Ver más</button>
+            </section>
+          </div>`
+          html += template
+        }
+      }
+    }
+  }
+  propiedadesSection.innerHTML = html
+}
+
+// Despliegue inicial de todas las cards
 for (const ventas of propiedadesJSON) {
   template = `
   <div class="propiedad">
@@ -79,35 +120,15 @@ for (const ventas of propiedadesJSON) {
   </div>`
   html += template
 }
-
 propiedadesSection.innerHTML = html
 cantTotalAMostrar.innerHTML = propiedadesJSON.length
 
+// Despliegue luego de presionar el boton buscar
 btnBuscar.addEventListener('click', () => {
   if (cantidadDeCuartos.value && cantMetrosDesde.value && cantMetrosHasta.value) {
     alert('Luego de filtrar')
-    let html = ''
-    template = ''
-    // let counter = 0
-    for (const ventas of propiedadesJSON) {
-      template = `
-      <div class="propiedad">
-        <div class="img"
-          style="background-image: url(${ventas.src})">
-        </div>
-        <section>
-          <h5>${ventas.name}</h5>
-          <div class="d-flex justify-content-between">
-            <p>Cuartos: ${ventas.rooms}</p>
-            <p>Metros: ${ventas.m}</p>
-          </div>
-          <p class="my-3">${ventas.description}</p>
-          <button class="btn btn-info ">Ver más</button>
-        </section>
-      </div>`
-      html += template
-    }
-    propiedadesSection.innerHTML = html
+    filtroDePropiedades(cantidadDeCuartos, cantMetrosDesde, cantMetrosHasta)
+    // propiedadesSection.innerHTML = html
   } else {
     if (cantidadDeCuartos.value.length === 0) {
       alert('Cantidad de cuartos vacio')
