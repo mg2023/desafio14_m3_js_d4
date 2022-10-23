@@ -56,26 +56,11 @@ const btnBuscar = document.getElementById('btn-buscar')
 const cantidadDeCuartos = document.getElementById('cant-cuartos')
 const cantMetrosDesde = document.getElementById('metros-desde')
 const cantMetrosHasta = document.getElementById('metros-hasta')
-
+const cantTotalAMostrar = document.getElementById('total-a-mostar')
 const propiedadesSection = document.querySelector('.propiedades')
-
-// propiedadesSection.innerHTML = `
-// <div class="propiedad">
-//   <div class="img"
-//     style="background-image: url(${propiedadesJSON[0]["src"]})">
-//   </div>
-//   <section>
-//     <h5>${propiedadesJSON[0]["name"]}</h5>
-//     <div class="d-flex justify-content-between">
-//       <p>Cuartos: ${propiedadesJSON[0]["rooms"]}</p>
-//       <p>Metros: ${propiedadesJSON[0]["m"]}</p>
-//     </div>
-//     <p class="my-3">${propiedadesJSON[0]["description"]}</p>
-//     <button class="btn btn-info ">Ver más</button>
-//   </section>
-// </div>`
-
 let template = ''
+let html = ''
+
 for (const ventas of propiedadesJSON) {
   template = `
   <div class="propiedad">
@@ -92,16 +77,18 @@ for (const ventas of propiedadesJSON) {
       <button class="btn btn-info ">Ver más</button>
     </section>
   </div>`
-  propiedadesSection.innerHTML += template
+  html += template
 }
+
+propiedadesSection.innerHTML = html
+cantTotalAMostrar.innerHTML = propiedadesJSON.length
 
 btnBuscar.addEventListener('click', () => {
   if (cantidadDeCuartos.value && cantMetrosDesde.value && cantMetrosHasta.value) {
-    // alert(`cantidad de cuartos ${cantidadDeCuartos.value}`)
-    // alert(`metros desde ${cantMetrosDesde.value}`)
-    // alert(`metros hasta ${cantMetrosHasta.value}`)
-
+    alert('Luego de filtrar')
+    let html = ''
     template = ''
+    // let counter = 0
     for (const ventas of propiedadesJSON) {
       template = `
       <div class="propiedad">
@@ -118,15 +105,16 @@ btnBuscar.addEventListener('click', () => {
           <button class="btn btn-info ">Ver más</button>
         </section>
       </div>`
-      propiedadesSection.innerHTML += template
+      html += template
     }
+    propiedadesSection.innerHTML = html
   } else {
     if (cantidadDeCuartos.value.length === 0) {
-      alert('cantidad de cuartos VACIO')
+      alert('Cantidad de cuartos vacio')
     } else if (cantMetrosDesde.value.length === 0) {
-      alert('cantidad de metros desde VACIO')
+      alert('Cantidad de metros desde vacio')
     } else if (cantMetrosHasta.value.length === 0) {
-      alert('cantidad de metros hasta VACIO')
+      alert('Cantidad de metros hasta vacio')
     } else {
       alert('Error no considerado')
     }
