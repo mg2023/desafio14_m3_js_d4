@@ -53,31 +53,25 @@ const propiedadesJSON = [
   }
 ]
 const btnBuscar = document.getElementById('btn-buscar')
+const btnLimpiar = document.getElementById('btn-limpiar-filtros')
 const cantidadDeCuartos = document.getElementById('cant-cuartos')
 const cantMetrosDesde = document.getElementById('metros-desde')
 const cantMetrosHasta = document.getElementById('metros-hasta')
 const cantTotalAMostrar = document.getElementById('total-a-mostar')
 const propiedadesSection = document.querySelector('.propiedades')
-let template = ''
-let html = ''
 
 function filtroDePropiedades (cantidadDeCuartos, cantMetrosDesde, cantMetrosHasta) {
-  let html = ''
-  template = ''
-  // let temp = []
-  let indexes = []
-  // console.log('Entra al filtro de propiedades')
-  // console.log(typeof (Number(cantidadDeCuartos.value)))
-  // console.log(typeof (cantMetrosDesde.value))
-  // console.log(typeof (cantMetrosHasta.value))
+  let template = ''
+  const ans = {
+    counter: 0,
+    html: ''
+  }
 
   for (const ventas of propiedadesJSON) {
     if (ventas.rooms === Number(cantidadDeCuartos.value)) {
       if (ventas.m >= Number(cantMetrosDesde.value)) {
         if (ventas.m <= Number(cantMetrosHasta.value)) {
-          console.log(ventas.rooms)
-          console.log(propiedadesJSON.indexOf(ventas))
-          console.log(ventas)
+          ans.counter += 1
           template = `
           <div class="propiedad">
             <div class="img"
@@ -93,42 +87,45 @@ function filtroDePropiedades (cantidadDeCuartos, cantMetrosDesde, cantMetrosHast
               <button class="btn btn-info ">Ver más</button>
             </section>
           </div>`
-          html += template
+          ans.html += template
         }
       }
     }
   }
-  propiedadesSection.innerHTML = html
+  return (ans)
 }
-
-// Despliegue inicial de todas las cards
-for (const ventas of propiedadesJSON) {
-  template = `
-  <div class="propiedad">
-    <div class="img"
-      style="background-image: url(${ventas.src})">
-    </div>
-    <section>
-      <h5>${ventas.name}</h5>
-      <div class="d-flex justify-content-between">
-        <p>Cuartos: ${ventas.rooms}</p>
-        <p>Metros: ${ventas.m}</p>
+function mostrarTodo () {
+  let template = ''
+  let html = ''
+  // Despliegue inicial de todas las cards
+  for (const ventas of propiedadesJSON) {
+    template = `
+    <div class="propiedad">
+      <div class="img"
+        style="background-image: url(${ventas.src})">
       </div>
-      <p class="my-3">${ventas.description}</p>
-      <button class="btn btn-info ">Ver más</button>
-    </section>
-  </div>`
-  html += template
+      <section>
+        <h5>${ventas.name}</h5>
+        <div class="d-flex justify-content-between">
+          <p>Cuartos: ${ventas.rooms}</p>
+          <p>Metros: ${ventas.m}</p>
+        </div>
+        <p class="my-3">${ventas.description}</p>
+        <button class="btn btn-info ">Ver más</button>
+      </section>
+    </div>`
+    html += template
+  }
+  propiedadesSection.innerHTML = html
+  cantTotalAMostrar.innerHTML = propiedadesJSON.length
 }
-propiedadesSection.innerHTML = html
-cantTotalAMostrar.innerHTML = propiedadesJSON.length
 
-// Despliegue luego de presionar el boton buscar
+// Renderizacion luego de presionar el boton buscar
 btnBuscar.addEventListener('click', () => {
   if (cantidadDeCuartos.value && cantMetrosDesde.value && cantMetrosHasta.value) {
-    alert('Luego de filtrar')
-    filtroDePropiedades(cantidadDeCuartos, cantMetrosDesde, cantMetrosHasta)
-    // propiedadesSection.innerHTML = html
+    const ans = filtroDePropiedades(cantidadDeCuartos, cantMetrosDesde, cantMetrosHasta)
+    propiedadesSection.innerHTML = ans.html
+    cantTotalAMostrar.innerHTML = ans.counter
   } else {
     if (cantidadDeCuartos.value.length === 0) {
       alert('Cantidad de cuartos vacio')
@@ -141,3 +138,15 @@ btnBuscar.addEventListener('click', () => {
     }
   }
 })
+
+// Renderizacion luego de presionar el boton limpiar
+btnLimpiar.addEventListener('click', () => {
+  cantidadDeCuartos.value = ''
+  cantMetrosDesde.value = ''
+  cantMetrosHasta.value = ''
+
+  mostrarTodo()
+})
+
+// Estado inicial, Renderiza todas la cards disponibles
+mostrarTodo()
