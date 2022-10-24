@@ -45,9 +45,11 @@ const propiedadesJSON = [
     name: 'Mansión',
     description: 'Vive una vida lujosa en la mansión de tus sueños ',
     src:
-      'https://cdn.bioguia.com/embed/3d0fb0142790e6b90664042cbafcb1581427139/furgoneta.jpg',
+    'assets/img/mansion.jpg',
+
+    // la siguiente imagen por alguna razon es bloqueada
     // src:
-    //   "https://resizer.glanacion.com/resizer/fhK-tSVag_8UGJjPMgWrspslPoU=/768x0/filters:quality(80)/cloudfront-us-east-1.images.arcpublishing.com/lanacionar/CUXVMXQE4JD5XIXX4X3PDZAVMY.jpg",
+    //     'https://resizer.glanacion.com/resizer/fhK-tSVag_8UGJjPMgWrspslPoU=/768x0/filters:quality(80)/cloudfront-us-east-1.images.arcpublishing.com/lanacionar/CUXVMXQE4JD5XIXX4X3PDZAVMY.jpg',
     rooms: 5,
     m: 500
   }
@@ -71,6 +73,7 @@ function filtroDePropiedades (cantidadDeCuartos, cantMetrosDesde, cantMetrosHast
     if (ventas.rooms === Number(cantidadDeCuartos.value)) {
       if (ventas.m >= Number(cantMetrosDesde.value)) {
         if (ventas.m <= Number(cantMetrosHasta.value)) {
+          console.log(ventas)
           ans.counter += 1
           template = `
           <div class="propiedad">
